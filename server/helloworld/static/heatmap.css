@@ -1,0 +1,20 @@
+/* Override bootstrap table cell borders */
+table, th, td, tr {
+    border: none;
+}
+
+.heatmap-cell_blue {
+    background-color: #293462;
+}
+
+.heatmap-cell_red {
+    background-color: #F24C4C;
+}
+
+.heatmap-cell_orange {
+    background-color: #EC9B3B;
+}
+
+.heatmap-cell_yellow {
+    background-color: #F7D716;
+}

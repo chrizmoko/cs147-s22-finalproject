@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+lab3_cs147.pem
+
+# Python venv
+.venv
+venv
+Include
+Lib
+Scripts
+pyvenv.cfg
+
+# Ide
+.vscode

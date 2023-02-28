@@ -1,0 +1,25 @@
+<div class="heatmap-table">
+    <div class="h4 text-center">{{ table_title }}</div>
+    <table class="table table-sm table-fixed">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                {% for header in column_headers %}
+                <th class="text-center" scope="col">{{ header }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row_header, columns in rows %}
+            <tr>
+                <th scope="row">{{ row_header }}</th>
+                {% for data in columns %}
+                <td class="heatmap-cell" title="{{ data }}">
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+

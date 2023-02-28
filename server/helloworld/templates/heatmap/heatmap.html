@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block stylesheets %}
+    {% if mac_address %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='heatmap.css') }}">
+    {% endif %}
+{% endblock stylesheets%}
+
+
+{% block content %}
+<h1>Heatmap</h1>
+<p>
+    Here you can find the the last time a device sent a message. All you need to know is that
+    device's MAC address.
+</p>
+<p>
+    Once you figured out the MAC address you want to look up, enter it into the URL in the following
+    manner. If you know the MAC address you are looking for is <mark>01:23:45:67:89:01</mark>, then 
+    you can see the activity heatmaps of that device by appending it to the heatmap url: 
+    <mark>/heatmap/01:23:45:67:89:01</mark>.
+</p>
+
+{% if mac_address %}
+<hr>
+
+<h2 class="text-center">Activity for {{ mac_address }}</h2>
+<p>
+    Below you will see numerous heatmaps displaying the activity of the device you are looking for.
+    The more messages a device sends, the more active it is. If you hover over each cell in the
+    heatmap, you can see how many messages were sent at that hour. The more yellow a cell is, the
+    more active that device was. On the contrary, the more blue a cell is, the less active the
+    device was.
+</p>
+
+<div class="breadcrumb">
+    <p class="font-weight-bold text-center">Heatmap Gradient</p>
+    <table class="table table-sm table-fixed table-borderless">
+        <thead>
+            <tr>
+                <th class="text-center">0</th>
+                <th class="text-center">1</th>
+                <th class="text-center">2 to 3</th>
+                <th class="text-center">4 or more</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="heatmap-cell_blue"></td>
+                <td class="heatmap-cell_red"></td>
+                <td class="heatmap-cell_orange"></td>
+                <td class="heatmap-cell_yellow"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+    {% for table_title, column_headers, rows in tables %}
+        {% include "heatmap/table.html" with context %}
+    {% endfor %}
+{% endif %}
+{% endblock content %}
+
+
+{% block scripts %}
+    {% if mac_address %}
+    <script>
+        let cells = document.getElementsByClassName("heatmap-cell");
+        for (let i = 0; i < cells.length; i++) {
+            let cellElement = cells.item(i);
+            let frequency = parseInt(cellElement.getAttribute("title"));
+            if (frequency <= 0) {
+                cellElement.classList.add("heatmap-cell_blue");
+            } else if (frequency <= 1) {
+                cellElement.classList.add("heatmap-cell_red");
+            } else if (frequency <= 3) {
+                cellElement.classList.add("heatmap-cell_orange");
+            } else {
+                cellElement.classList.add("heatmap-cell_yellow");
+            }
+        }
+    </script>
+    {% endif %}
+{% endblock scripts %}
